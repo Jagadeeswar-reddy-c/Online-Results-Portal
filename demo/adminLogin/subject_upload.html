@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Combined Upload Forms</title>
+</head>
+
+<body>
+    <h1>Upload subject UPLOAD CSV File</h1>
+    <form action="subject_upload.php" method="post" enctype="multipart/form-data">
+        <!-- <label for="semester_id">Select Semester:</label>
+        <select id="semester_id" name="semester_id" required>
+            <option value="1">Semester 1</option>
+            <option value="2">Semester 2</option>
+            <option value="3">Semester 3</option>
+            <option value="4">Semester 4</option>
+            <option value="5">Semester 5</option>
+            <option value="6">Semester 6</option>
+            <option value="7">Semester 7</option>
+            <option value="8">Semester 8</option>
+        </select><br><br> -->
+
+        <label for="csv_file">Upload CSV File:</label>
+        <input type="file" id="csv_file" name="csv_file" accept=".csv" required><br><br>
+
+        <input type="submit" value="Upload">
+    </form><br>
+    <form action="subject_upload.php" method="post" enctype="multipart/form-data">
+        <!-- <label for="semester_id">Select Semester:</label>
+        <select id="semester_id" name="semester_id" required>
+            <option value="1">Semester 1</option>
+            <option value="2">Semester 2</option>
+            <option value="3">Semester 3</option>
+            <option value="4">Semester 4</option>
+            <option value="5">Semester 5</option>
+            <option value="6">Semester 6</option>
+            <option value="7">Semester 7</option>
+            <option value="8">Semester 8</option>
+        </select><br><br> -->
+
+        <label for="subject_code">Enter Subject Code:</label>
+        <input type="text" id="subject_code" name="subject_code" required><br><br>
+
+        <label for="subject_name">Enter Subject Name:</label>
+        <input type="text" id="subject_name" name="subject_name" required><br><br>
+
+        <label for="subject_credits">Enter Subject Credits:</label>
+        <input type="number" id="subject_credits" name="subject_credits" required><br><br>
+
+        <input type="submit" value="Upload">
+    </form>
+    <div id="notification"></div>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const notification = urlParams.get('notification');
+        if (notification) {
+            document.getElementById('notification').innerText = notification;
+        }
+
+        const success = urlParams.get('success');
+        if (success === '1') {
+            const successMessage = document.getElementById('successMessage');
+            if (successMessage) {
+                successMessage.style.display = 'block';
+            }
+        }
+    </script>
+</body>
+
+</html>

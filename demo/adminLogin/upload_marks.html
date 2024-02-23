@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Combined Upload Forms</title>
+    <link rel="stylesheet" href="./stylesheet/button.css" />
+</head>
+
+<body>
+
+    <h2>Upload Marks</h2>
+
+
+
+    <form action="upload_marks.php" method="post" enctype="multipart/form-data">
+        <label for="internal_marks">Upload Internal Marks CSV:</label>
+        <input type="file" id="internal_marks" name="internal_marks" accept=".csv" required><br><br>
+
+        <label for="external_marks">Upload External Marks CSV:</label>
+        <input type="file" id="external_marks" name="external_marks" accept=".csv" required><br><br>
+
+        <label for="semester_id">Select Semester:</label>
+        <select id="semester_id" name="semester_id" required>
+            <option value="1">Semester 1</option>
+            <option value="2">Semester 2</option>
+            <option value="3">Semester 3</option>
+            <option value="4">Semester 4</option>
+            <option value="5">Semester 5</option>
+            <option value="6">Semester 6</option>
+            <option value="7">Semester 7</option>
+            <option value="8">Semester 8</option>
+        </select><br><br>
+
+        <button class="button-5" role="button" type="submit">Upload and Insert</button>
+    </form>
+
+    <div id="successMessage" style="display: none; color: green;">
+        Marks uploaded successfully!
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const notification = urlParams.get('notification');
+        if (notification) {
+            document.getElementById('notification').innerText = notification;
+        }
+
+        const success = urlParams.get('success');
+        if (success === '1') {
+            const successMessage = document.getElementById('successMessage');
+            if (successMessage) {
+                successMessage.style.display = 'block';
+            }
+        }
+    </script>
+</body>
+
+</html>

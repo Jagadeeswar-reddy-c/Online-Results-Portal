@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Marks</title>
+    <link rel="stylesheet" href="./stylesheet/button.css" />
+</head>
+
+<body>
+    <h2>Student Marks</h2>
+
+    <form action="" method="post">
+        <!-- Remove the input field for student_id -->
+        <!-- The student ID will be automatically retrieved from the session -->
+
+        <label for="sem_id">Select Semester:</label>
+        <select id="sem_id" name="sem_id" required>
+            <!-- Replace the values and labels below with your actual semester values -->
+            <option value="1">Semester 1</option>
+            <option value="2">Semester 2</option>
+            <option value="3">Semester 3</option>
+            <option value="4">Semester 4</option>
+            <option value="5">Semester 5</option>
+            <option value="6">Semester 6</option>
+            <option value="7">Semester 7</option>
+            <option value="8">Semester 8</option>
+            <!-- Add more options as needed -->
+        </select>
+
+        <br>
+        <button class="button-5" role="button" type="submit" name="displayMarks">Display Marks</button>
+    </form>
+
+    <?php
+    // Start the session
+    session_start();
+
+    // Include the PHP code here
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["displayMarks"])) {
+        include "student_results.php";
+    }
+    ?>
+</body>
+
+</html>
