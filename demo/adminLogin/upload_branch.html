@@ -35,7 +35,7 @@
     <h1>Upload Branch CSV File</h1>
 
     <!-- Form for CSV File Upload -->
-    <form id="uploadForm" action="upload_branch.php" method="post" enctype="multipart/form-data">
+    <form id="uploadForm" action="./upload_branch.php" method="post" enctype="multipart/form-data">
         <!-- File input for CSV -->
         <label for="branchFile">Choose CSV File:</label>
         <input type="file" name="branchFile" id="branchFile" accept=".csv">
@@ -47,13 +47,13 @@
     <br>
 
     <!-- Form for Manual Entry -->
-    <form id="manualEntryForm" action="upload_branch.php" method="post">
+    <form id="manualEntryForm" action="./upload_branch.php" method="post">
         <!-- Subject Number input -->
-        <label for="subjectNumber">Subject Number:</label>
+        <label for="subjectNumber">Branch Number:</label>
         <input type="text" name="subjectNumber" id="subjectNumber" required>
 
         <!-- Subject Code input -->
-        <label for="subjectCode">Subject Code:</label>
+        <label for="subjectCode">Branch Name:</label>
         <input type="text" name="subjectCode" id="subjectCode" required>
 
         <!-- Upload button for Manual Entry -->

@@ -73,7 +73,7 @@
             $editedPhone = $_POST["student_phone"];
 
             // Update student details in the database
-            $updateQuery = "UPDATE STUDENT_DETAILS SET STUDENT_NAME='$editedName', STUDENT_GENDER='$editedGender', STUDENT_PH='$editedPhone' WHERE STUDENT_ID='$editedId'";
+            $updateQuery = "UPDATE USER_DETAILS SET USER_NAME='$editedName', USER_GENDER='$editedGender', USER_PH='$editedPhone' WHERE USER_ID='$editedId'";
             $updateResult = mysqli_query($connection, $updateQuery);
 
             if ($updateResult) {

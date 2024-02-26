@@ -1,36 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Upload Student Details CSV</title>
-  <script>
-    function getParameterByName(name, url) {
-      if (!url) url = window.location.href;
-      name = name.replace(/[\[\]]/g, "\\$&");
-      var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-          results = regex.exec(url);
-      if (!results) return null;
-      if (!results[2]) return '';
-      return decodeURIComponent(results[2].replace(/\+/g, " "));
-    }
+    <meta charset="UTF-8">
+    <title>Upload Student Details CSV</title>
+    <script>
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
 
-    function displayNotification() {
-      var successMessage = getParameterByName('success');
-      if (successMessage === 'true') {
-        alert('Data inserted successfully!');
-      }
-    }
+        function displayNotification() {
+            var successMessage = getParameterByName('success');
+            if (successMessage === 'true') {
+                alert('Data inserted successfully!');
+            }
+        }
 
-    window.onload = function() {
-      displayNotification();
-    };
-  </script>
+        window.onload = function() {
+            displayNotification();
+        };
+    </script>
 </head>
+
 <body>
-  <h1>Upload Student Details CSV File</h1>
-  <form id="uploadForm" action="student_details_upload.php" method="post" enctype="multipart/form-data">
-    <input type="file" name="studentFile" accept=".csv">
-    <button type="submit">Upload</button>
-  </form>
+    <h1>Upload Student Details CSV File</h1>
+    <form id="uploadForm" action="./student_details_upload.php" method="post" enctype="multipart/form-data">
+        <input type="file" name="studentFile" accept=".csv">
+        <button type="submit">Upload</button>
+    </form>
 </body>
+
 </html>

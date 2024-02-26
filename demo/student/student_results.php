@@ -56,16 +56,16 @@
 
         // Your SQL query
         $sql = "SELECT ST.SUBJECT_CODE, ST.SUBJECT_NAME, SM.INTERNAL_MARKS, SM.EXTERNAL_MARKS, ST.SUBJECT_CREDITS
-                FROM STUDENT_DETAILS SD
-                INNER JOIN STUDENT_MARKS SM ON SD.STUDENT_ID = SM.STUDENT_ID
+                FROM USER_DETAILS SD
+                INNER JOIN STUDENT_MARKS SM ON SD.USER_ID = SM.USER_ID
                 INNER JOIN SUBJECT_TABLE ST ON SM.SUBJECT_NO = ST.SUBJECT_NO
-                WHERE SD.STUDENT_ID = '$student_id' AND SM.SEM_ID = $sem_id";
+                WHERE SD.USER_ID = '$student_id' AND SM.SEM_ID = $sem_id";
         
         // Execute the query
         $result = $connection->query($sql);
 
         // $student_name = $connection->query("SELECT SD.STUDENT_NAME FROM STUDENT_DETAILS SD WHERE SD.STUDENT_ID = '$student_id'");
-        $nameResult = $connection->query("SELECT SD.STUDENT_NAME FROM STUDENT_DETAILS SD WHERE SD.STUDENT_ID = '$student_id'");
+        $nameResult = $connection->query("SELECT SD.USER_NAME FROM USER_DETAILS SD WHERE SD.USER_ID = '$student_id'");
 
 
         if ($nameResult) {
@@ -73,7 +73,7 @@
             $nameRow = $nameResult->fetch_assoc();
         
             // Display the student name
-            $student_name = $nameRow['STUDENT_NAME'];
+            $student_name = $nameRow['USER_NAME'];
         } else {
             // Handle the error if query fails
             echo "Error fetching student name: " . $connection->error;

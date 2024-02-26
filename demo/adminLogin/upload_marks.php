@@ -61,19 +61,19 @@ foreach ($internal_data as $key => $internal_row) {
             $external_marks = '-';
 
             // Check if a record already exists for the student and subject
-            $check_query = "SELECT * FROM STUDENT_MARKS WHERE STUDENT_ID = '$student_id' AND SUBJECT_NO = '$subject_no'";
+            $check_query = "SELECT * FROM STUDENT_MARKS WHERE USER_ID = '$student_id' AND SUBJECT_NO = '$subject_no'";
             $check_result = $conn->query($check_query);
 
             if ($check_result !== false && $check_result->num_rows > 0) {
                 // Update the existing record with internal marks
-                $update_sql = "UPDATE STUDENT_MARKS SET INTERNAL_MARKS = '$internal_marks' WHERE STUDENT_ID = '$student_id' AND SUBJECT_NO = '$subject_no'";
+                $update_sql = "UPDATE STUDENT_MARKS SET INTERNAL_MARKS = '$internal_marks' WHERE USER_ID = '$student_id' AND SUBJECT_NO = '$subject_no'";
                 if ($conn->query($update_sql) !== TRUE) {
                     echo "Error updating record: " . $conn->error;
                 }
             } else {
                 // echo $subject_no." ";
                 // Insert a new record for internal marks
-                $insert_sql = "INSERT INTO STUDENT_MARKS (STUDENT_ID, SUBJECT_NO, INTERNAL_MARKS, EXTERNAL_MARKS, SEM_ID) VALUES ('$student_id', '$subject_no', '$internal_marks', '$external_marks',$semester_id)";
+                $insert_sql = "INSERT INTO STUDENT_MARKS (USER_ID, SUBJECT_NO, INTERNAL_MARKS, EXTERNAL_MARKS, SEM_ID) VALUES ('$student_id', '$subject_no', '$internal_marks', '$external_marks',$semester_id)";
                 // echo $subject_no." ".$subject_code." ".$insert_sql;
                 if ($conn->query($insert_sql) !== TRUE) {
                     echo "Error inserting record: " . $conn->error;
@@ -120,19 +120,19 @@ foreach ($external_data as $key => $external_row) {
             
 
             // Check if a record already exists for the student and subject
-            $check_query = "SELECT * FROM STUDENT_MARKS WHERE STUDENT_ID = '$student_id' AND SUBJECT_NO = '$subject_no'";
+            $check_query = "SELECT * FROM STUDENT_MARKS WHERE USER_ID = '$student_id' AND SUBJECT_NO = '$subject_no'";
             $check_result = $conn->query($check_query);
 
 
             if ($check_result !== false && $check_result->num_rows > 0) {
                 // Update the existing record with external marks
-                $update_sql = "UPDATE STUDENT_MARKS SET EXTERNAL_MARKS = '$external_marks' WHERE STUDENT_ID = '$student_id' AND SUBJECT_NO = '$subject_no'";
+                $update_sql = "UPDATE STUDENT_MARKS SET EXTERNAL_MARKS = '$external_marks' WHERE USER_ID = '$student_id' AND SUBJECT_NO = '$subject_no'";
                 if ($conn->query($update_sql) !== TRUE) {
                     echo "Error updating record: " . $conn->error;
                 }
             } else {
                 // Insert a new record for external marks
-                $insert_sql = "INSERT INTO STUDENT_MARKS (STUDENT_ID, SUBJECT_NO, INTERNAL_MARKS, EXTERNAL_MARKS, SEM_ID) VALUES ('$student_id', '$subject_no', '$internal_marks', '$external_marks',$semester_id)";
+                $insert_sql = "INSERT INTO STUDENT_MARKS (USER_ID, SUBJECT_NO, INTERNAL_MARKS, EXTERNAL_MARKS, SEM_ID) VALUES ('$student_id', '$subject_no', '$internal_marks', '$external_marks',$semester_id)";
                 if ($conn->query($insert_sql) !== TRUE) {
                     echo "Error inserting record: " . $conn->error;
                 }

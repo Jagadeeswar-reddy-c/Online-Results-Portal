@@ -22,7 +22,9 @@ if (isset($_FILES['studentFile']) && $_FILES['studentFile']['error'] === UPLOAD_
             die("Connection failed: " . $conn->connect_error);
         }
 
-        $sql = "INSERT INTO STUDENT_DETAILS (STUDENT_ID, STUDENT_NAME, STUDENT_GENDER, STUDENT_DOB, STUDENT_PH, BRANCH_ID, STUDENT_BATCH) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        // include 'db_connection.php';
+
+        $sql = "INSERT INTO USER_DETAILS (USER_ID, USER_NAME, USER_GENDER, USER_DOB, USER_PH, BRANCH_ID, USER_BATCH, USER_NUM) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
 
         foreach ($csvData as $row) {
@@ -31,6 +33,13 @@ if (isset($_FILES['studentFile']) && $_FILES['studentFile']['error'] === UPLOAD_
             $studentGender = $row[2];
             $dobMDY = $row[3];
             $studentPhone = "";
+            $role = 0;
+
+            if (strlen($studentId)==10){
+                $role = 1;
+            }else{
+                $role = 2;
+            }
 
             // echo $dobMDY."\n";
 
@@ -40,7 +49,7 @@ if (isset($_FILES['studentFile']) && $_FILES['studentFile']['error'] === UPLOAD_
 
 
             // Check if the student ID already exists in the database
-            $checkIfExistsQuery = "SELECT STUDENT_ID FROM STUDENT_DETAILS WHERE STUDENT_ID = ?";
+            $checkIfExistsQuery = "SELECT USER_ID FROM USER_DETAILS WHERE USER_ID = ?";
             $checkIfExistsStmt = $conn->prepare($checkIfExistsQuery);
             $checkIfExistsStmt->bind_param("s", $studentId);
             $checkIfExistsStmt->execute();
@@ -63,14 +72,14 @@ if (isset($_FILES['studentFile']) && $_FILES['studentFile']['error'] === UPLOAD_
                 continue;
             }
 
-            $stmt->bind_param("sssssss", $studentId, $studentName, $studentGender, $dobYMD, $studentPhone, $branchId, $studentBatch);
+            $stmt->bind_param("sssssssi", $studentId, $studentName, $studentGender, $dobYMD, $studentPhone, $branchId, $studentBatch, $role);
 
             if (!$stmt->execute()) {
                 die("Error inserting record: " . $stmt->error);
             }
 
             // Insert student ID as password into USERID table
-            $sqlUserId = "INSERT INTO USERID (STUDENT_ID, PASSWORD) VALUES (?, ?)";
+            $sqlUserId = "INSERT INTO USERID (USER_ID, PASSWORD) VALUES (?, ?)";
             $stmtUserId = $conn->prepare($sqlUserId);
             $stmtUserId->bind_param("ss", $studentId, $dobYMD);
             
