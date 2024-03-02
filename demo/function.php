@@ -142,6 +142,22 @@ if($conn->query($sql)===TRUE){
     echo  "Error inserting data into 'ADMINS' table: " . $conn->error;
 }
 
+$sql = "INSERT INTO USER_DETAILS (USER_ID,USER_NAME,USER_GENDER,USER_DOB,USER_PH,BRANCH_ID,USER_BATCH,USER_NUM) VALUES ('FACULTY','FACULTY','M','00000000','',0,2020,2)";
+
+if($conn->query($sql)===TRUE){
+    echo "Table 'FACULTY' Data inserted successfully<br>";
+}else{
+    echo  "Error inserting data into 'ADMINS' table: " . $conn->error;
+}
+
+$sql = "INSERT INTO USERID (USER_ID, PASSWORD) VALUES ('FACULTY', '00000000')";
+
+if($conn->query($sql)===TRUE){
+    echo "Table 'FACULTY' ID inserted successfully<br>";
+}else{
+    echo  "Error inserting data into 'ADMINS' table: " . $conn->error;
+}
+
 // Close connection
 $conn->close();
 ?>
