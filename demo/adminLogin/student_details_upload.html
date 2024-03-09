@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Upload Student Details CSV</title>
+    <link rel="stylesheet" href="../style sheet/loadingStyle.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
         function getParameterByName(name, url) {
             if (!url) url = window.location.href;
@@ -18,13 +20,39 @@
         function displayNotification() {
             var successMessage = getParameterByName('success');
             if (successMessage === 'true') {
-                alert('Data inserted successfully!');
+                document.getElementById("information").innerHTML = 'Data inserted successfully!';
             }
         }
 
-        window.onload = function() {
+        $(document).ready(function() {
             displayNotification();
-        };
+
+            $("#uploadForm").submit(function(event) {
+                // Prevent the default form submission
+                event.preventDefault();
+
+                // Display the loader immediately upon form submission
+                $(".loader").show();
+
+                // AJAX form submission
+                $.ajax({
+                    type: "POST",
+                    url: $(this).attr('action'),
+                    data: new FormData(this),
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    success: function(response) {
+                        $(".loader").hide();
+                        if (response === "success") {
+                            window.location.href = "./student_details_upload.html?success=true";
+                        } else {
+                            $("#information").html(response);
+                        }
+                    }
+                });
+            });
+        });
     </script>
 </head>
 
@@ -34,6 +62,9 @@
         <input type="file" name="studentFile" accept=".csv">
         <button type="submit">Upload</button>
     </form>
+    <div id="information"></div>
+    <!-- Loading symbol -->
+    <div class="loader" style="display: none;"></div>
 </body>
 
 </html>

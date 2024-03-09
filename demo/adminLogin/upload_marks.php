@@ -145,6 +145,8 @@ foreach ($external_data as $key => $external_row) {
 
 // Close the database connection
 $conn->close();
-header("Location: upload_marks.html?success=1");
+// Respond with a success message
+echo "success";
 exit();
 ?>
+

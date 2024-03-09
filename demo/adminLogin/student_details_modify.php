@@ -27,7 +27,7 @@
             $studentId = $_POST["student_id"];
 
             // Retrieve student details from the database
-            $query = "SELECT * FROM STUDENT_DETAILS WHERE STUDENT_ID = '$studentId'";
+            $query = "SELECT * FROM USER_DETAILS WHERE USER_ID = '$studentId'";
             $result = mysqli_query($connection, $query);
 
             if ($result && mysqli_num_rows($result) > 0) {
@@ -35,17 +35,17 @@
     ?>
                 <!-- Display the student details with edit form -->
                 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-                    <input type="hidden" name="student_id" value="<?php echo $row['STUDENT_ID']; ?>">
+                    <input type="hidden" name="student_id" value="<?php echo $row['USER_ID']; ?>">
                     <label for="student_name">Name:</label>
-                    <input type="text" name="student_name" value="<?php echo $row['STUDENT_NAME']; ?>" required>
+                    <input type="text" name="student_name" value="<?php echo $row['USER_NAME']; ?>" required>
                     <br>
 
                     <label for="student_gender">Gender:</label>
-                    <input type="text" name="student_gender" value="<?php echo $row['STUDENT_GENDER']; ?>" required>
+                    <input type="text" name="student_gender" value="<?php echo $row['USER_GENDER']; ?>" required>
                     <br>
 
                     <label for="student_phone">Phone Number:</label>
-                    <input type="text" name="student_phone" value="<?php echo $row['STUDENT_PH']; ?>" required>
+                    <input type="text" name="student_phone" value="<?php echo $row['USER_PH']; ?>" required>
                     <br>
 
                     <button class="button-5" role="button" type="submit" name="edit_submit">Update</button>

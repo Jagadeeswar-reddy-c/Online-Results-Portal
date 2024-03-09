@@ -26,6 +26,7 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
     </style>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 
 <body>
@@ -34,8 +35,8 @@
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd" ;>
         <a class="navbar-brand" href="#">KSRMCE EXAMINATION PORTAL</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+            <span class="navbar-toggler-icon"></span>
+        </button>
         <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav ms-auto my-2 my-lg-0 ">
                 <li class="nav-item active">
@@ -53,7 +54,7 @@
             <div class="col-md-4">
                 <div class="login-form">
                     <h2>Login</h2>
-                    <form action="./admin_login.php" method="post">
+                    <form id="loginForm" action="./admin_login.php" method="post">
                         <div class="form-group">
                             <label for="username">Username</label>
                             <input type="text" class="form-control" id="username" name="username" placeholder="Enter username">
@@ -62,17 +63,39 @@
                             <label for="password">Password</label>
                             <input type="password" class="form-control" id="password" name="password" placeholder="Enter password">
                         </div>
-                        <button type="submit" class="btn btn-light text-white">Login</button>
+
+                        <!-- Error message placeholder -->
+                        <div class="error-message" style="color: red;"></div>
+
+                        <button type="button" class="btn btn-light text-white" onclick="submitForm()">Login</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Bootstrap JS and dependencies -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        function submitForm() {
+            $.ajax({
+                type: "POST",
+                url: "./admin_login.php",
+                data: $("#loginForm").serialize(),
+                success: function(response) {
+                    if (response === "success1") {
+                        window.location.href = "./stdLogin.html"; // Redirect on successful login
+                    } else if (response === "success2") {
+                        window.location.href = "./facultylogin.html"; // Redirect on successful login
+                    } else if (response === "success3") {
+                        window.location.href = "./adminLogin.html";
+                    } else {
+                        $(".error-message").text(response); // Display error message
+                    }
+                }
+            });
+        }
+    </script>
+
+    <!-- Bootstrap JS and dependencies... -->
 </body>
 
 </html>

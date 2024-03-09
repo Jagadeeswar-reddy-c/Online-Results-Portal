@@ -22,8 +22,6 @@ if (isset($_FILES['studentFile']) && $_FILES['studentFile']['error'] === UPLOAD_
             die("Connection failed: " . $conn->connect_error);
         }
 
-        // include 'db_connection.php';
-
         $sql = "INSERT INTO USER_DETAILS (USER_ID, USER_NAME, USER_GENDER, USER_DOB, USER_PH, BRANCH_ID, USER_BATCH, USER_NUM) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
 
@@ -35,18 +33,15 @@ if (isset($_FILES['studentFile']) && $_FILES['studentFile']['error'] === UPLOAD_
             $studentPhone = "";
             $role = 0;
 
-            if (strlen($studentId)==10){
+            if (strlen($studentId) == 10) {
                 $role = 1;
-            }else{
+            } else {
                 $role = 2;
             }
 
-            // echo $dobMDY."\n";
-
-            if(empty($dobMDY)){
+            if (empty($dobMDY)) {
                 $dobDMY = "0000-00-00";
             }
-
 
             // Check if the student ID already exists in the database
             $checkIfExistsQuery = "SELECT USER_ID FROM USER_DETAILS WHERE USER_ID = ?";
@@ -55,7 +50,7 @@ if (isset($_FILES['studentFile']) && $_FILES['studentFile']['error'] === UPLOAD_
             $checkIfExistsStmt->execute();
             $checkIfExistsResult = $checkIfExistsStmt->get_result();
 
-            if ($checkIfExistsResult->num_rows > 0 ) {
+            if ($checkIfExistsResult->num_rows > 0) {
                 // Student ID already exists, skip this iteration
                 continue;
             }
@@ -65,10 +60,7 @@ if (isset($_FILES['studentFile']) && $_FILES['studentFile']['error'] === UPLOAD_
             $year = (int) substr($studentId, 0, 2);
             $studentBatch = (substr($studentId, 4, 1) == 5) ? "20" . ($year - 1) : "20" . $year;
 
-            // echo $dobYMD." ";
-            
-
-            if($studentId == "HTNO" || $servername == "STUDENTNAME"){
+            if ($studentId == "HTNO" || $servername == "STUDENTNAME") {
                 continue;
             }
 
@@ -82,8 +74,7 @@ if (isset($_FILES['studentFile']) && $_FILES['studentFile']['error'] === UPLOAD_
             $sqlUserId = "INSERT INTO USERID (USER_ID, PASSWORD) VALUES (?, ?)";
             $stmtUserId = $conn->prepare($sqlUserId);
             $stmtUserId->bind_param("ss", $studentId, $dobYMD);
-            
-            // echo " ".$studentId." ".$dobYMD;
+
             if (!$stmtUserId->execute()) {
                 die("Error inserting record into USERID: " . $stmtUserId->error);
             }
@@ -95,7 +86,7 @@ if (isset($_FILES['studentFile']) && $_FILES['studentFile']['error'] === UPLOAD_
         $stmt->close();
         $conn->close();
 
-        header("Location: student_details_upload.html?success=true");
+        echo "success";
         exit();
     } else {
         echo "Invalid file extension. Please upload a CSV file.";
