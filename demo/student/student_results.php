@@ -91,19 +91,81 @@
                         <th>Subject Name</th>
                         <th>Internal Marks</th>
                         <th>External Marks</th>
+                        <th>Total Marks</th>
+                        <th>Grade</th>
+                        <th>Grade Points</th>
                         <th>Subject Credits</th>
                     </tr>";
-
+        
+            $totalCredits = 0;
+            $weightedSum = 0;
+        
             while ($row = $result->fetch_assoc()) {
+                // Calculate total marks
+                $external = $row['EXTERNAL_MARKS'];
+                if ($external == '-' || $external == 'MB' || $external == 'AB'){
+                    $external = 0;
+                }
+                $totalMarks = $row['INTERNAL_MARKS'] + $external;
+        
+                // Assign a grade based on the total marks
+                if ($totalMarks >= 90) {
+                    $grade = 'S';
+                    $gradePoints = 10;
+                } elseif ($totalMarks >= 80) {
+                    $grade = 'A';
+                    $gradePoints = 9;
+                } elseif ($totalMarks >= 70) {
+                    $grade = 'B';
+                    $gradePoints = 8;
+                } elseif ($totalMarks >= 60) {
+                    $grade = 'C';
+                    $gradePoints = 7;
+                } elseif ($totalMarks >= 50) {
+                    $grade = 'D';
+                    $gradePoints = 6;
+                } elseif ($totalMarks >= 40) {
+                    $grade = 'E';
+                    $gradePoints = 5;
+                } else {
+                    $grade = 'F';
+                    $gradePoints = 0;
+                }
+
+                
+        
+                if ($row['EXTERNAL_MARKS'] == '-') {
+                    $grade = 'P';
+                }
+
+                // Calculate subject points
+                $subjectPoints = $gradePoints * $row['SUBJECT_CREDITS'];
+        
+                // Accumulate weighted sum and total credits
+                $weightedSum += $subjectPoints;
+                $totalCredits += $row['SUBJECT_CREDITS'];
+        
                 echo "<tr>
                         <td>{$row['SUBJECT_CODE']}</td>
                         <td>{$row['SUBJECT_NAME']}</td>
                         <td>{$row['INTERNAL_MARKS']}</td>
                         <td>{$row['EXTERNAL_MARKS']}</td>
+                        <td>$totalMarks</td>
+                        <td>$grade</td>
+                        <td>$gradePoints</td>
                         <td>{$row['SUBJECT_CREDITS']}</td>
                     </tr>";
             }
-
+        
+            // Calculate SGPA
+            if ($totalCredits > 0) {
+                $sgpa = number_format($weightedSum / $totalCredits,2);
+                echo "<tr>
+                        <td colspan='7'><strong>SGPA</strong></td>
+                        <td><strong>$sgpa</strong></td>
+                    </tr>";
+            }
+        
             echo "</table>";
         } else {
             echo "Error executing the query: " . $connection->error;

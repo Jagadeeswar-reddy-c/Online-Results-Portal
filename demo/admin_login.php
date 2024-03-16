@@ -29,19 +29,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $row = $userNumResult->fetch_assoc();
         $userNum = $row['USER_NUM'];
 
-        if ($userNum == 1) {
+        if ($userNum == 1 || $userNum == 2 || $userNum == 3) {
             $_SESSION['user_id'] = $username;
-            echo "success1";
-        } elseif ($userNum == 2) {
-            $_SESSION['user_id'] = $username;
-            echo "success2";
-        } elseif ($userNum == 3) {
-            $_SESSION['user_id'] = $username;
-            echo "success3";
+            
+            // Retrieve user's name from the database
+            $userNameResult = $conn->query("SELECT USER_NAME FROM USER_DETAILS WHERE USER_ID='$username'");
+            $row = $userNameResult->fetch_assoc();
+            $userName = $row['USER_NAME'];
+        
+            $to = $username . '@ksrmce.ac.in'; // User's email address
+            $subject = "Login Notification";
+            $message = "Hello, you have successfully logged in.";
+            $headers = "From: college"; // Your email address
+        
+            // Send email
+            mail($to, $subject, $message, $headers);
+        
+            // Return success response with user role and name
+            echo "success$userNum $userName"; 
         } else {
             // Login failed
             echo "Invalid username or password";
-        }
+        }        
     } else {
         // Login failed
         echo "Invalid username or password";

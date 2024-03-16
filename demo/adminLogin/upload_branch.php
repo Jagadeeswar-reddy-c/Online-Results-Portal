@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_FILES['branchFile']) && $_FILES['branchFile']['error'] === UPLOAD_ERR_OK) {
         // CSV File Upload
@@ -24,25 +26,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 die("Connection failed: " . $conn->connect_error);
             }
 
-            $sql = "INSERT INTO BRANCH_ID_DETAILS (BRANCH_ID, BRANCH_NAME) VALUES (?, ?)";
+            $sql = "INSERT IGNORE INTO BRANCH_ID_DETAILS (BRANCH_ID, BRANCH_NAME) VALUES (?, ?)";
             $stmt = $conn->prepare($sql);
 
             foreach ($csvData as $row) {
                 $branchId = $row[0];
                 $branchName = $row[1];
-                if($branchName != "BRANCH_NAME"){
-                    $stmt->bind_param("is", $branchId, $branchName);
-                    $stmt->execute();
-                }
+
+                // Data is inserted only if it doesn't already exist in the database
+                $stmt->bind_param("is", $branchId, $branchName);
+                $stmt->execute();
             }
 
             $stmt->close();
             $conn->close();
 
+            $_SESSION['message'] = 'Data inserted successfully!';
             header("Location: upload_branch.html?success=true");
             exit();
         } else {
-            echo "Invalid file extension. Please upload a CSV file.";
+            $_SESSION['error'] = 'Invalid file extension. Please upload a CSV file.';
         }
     } elseif (isset($_POST['subjectNumber']) && isset($_POST['subjectCode'])) {
         // Manual Entry
@@ -54,27 +57,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $password = "";
         $dbname = "STUDENT_MARKS_MANAGEMENT";
 
-        
-
         $conn = new mysqli($servername, $username, $password, $dbname);
 
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         }
 
-        $sql = "INSERT INTO BRANCH_ID_DETAILS (BRANCH_ID, BRANCH_NAME) VALUES (?, ?)";
+        // Data is inserted only if it doesn't already exist in the database
+        $sql = "INSERT IGNORE INTO BRANCH_ID_DETAILS (BRANCH_ID, BRANCH_NAME) VALUES (?, ?)";
         $stmt = $conn->prepare($sql);
-
         $stmt->bind_param("is", $subjectNumber, $subjectCode);
-        $stmt->execute();
+
+        if ($stmt->execute()) {
+            $_SESSION['message'] = 'Data inserted successfully!';
+            header("Location: upload_branch.html?success=true");
+            exit();
+        } else {
+            $_SESSION['error'] = 'Error: ' . $stmt->error;
+        }
 
         $stmt->close();
         $conn->close();
-
-        header("Location: upload_branch.html?success=true");
-        exit();
     } else {
-        echo "File upload failed or no file was selected.";
+        $_SESSION['error'] = 'File upload failed or no file was selected.';
     }
 }
+
+// Redirect to the same page
+header("Location: upload_branch.html");
+exit();
 ?>

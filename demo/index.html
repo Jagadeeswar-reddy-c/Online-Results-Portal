@@ -73,7 +73,7 @@
             </div>
         </div>
     </div>
-
+    <!-- 
     <script>
         function submitForm() {
             $.ajax({
@@ -93,7 +93,51 @@
                 }
             });
         }
+    </script> -->
+    <script>
+        function submitForm() {
+            $.ajax({
+                type: "POST",
+                url: "./admin_login.php",
+                data: $("#loginForm").serialize(),
+                success: function(response) {
+                    if (response.startsWith("success")) {
+                        var responseData = response.split("success");
+                        // responseData = responseData[2];
+                        // console.log(responseData[0]);
+                        // var userRole = responseData[1];
+                        // var userName = responseData[2];
+
+                        // Extracting string from the array
+                        var string = responseData[1];
+
+                        // Splitting the string by space
+                        var parts = string.split(' ');
+
+                        // Extracting the numeric part and the rest of the string
+                        var userRole = parts[0]; // '1'
+                        var restOfString = parts.slice(1).join(' '); // 'jagadees r'
+
+                        // Update the content of the "user" element
+                        $("#user").text("Welcome, " + restOfString);
+                        localStorage.setItem("userName", restOfString);
+
+                        // Redirect based on user role
+                        if (userRole === "1") {
+                            window.location.href = "./stdLogin.html";
+                        } else if (userRole === "2") {
+                            window.location.href = "./facultylogin.html";
+                        } else if (userRole === "3") {
+                            window.location.href = "./adminLogin.html";
+                        }
+                    } else {
+                        $(".error-message").text(response); // Display error message
+                    }
+                }
+            });
+        }
     </script>
+
 
     <!-- Bootstrap JS and dependencies... -->
 </body>

@@ -19,9 +19,23 @@
         // Function to display notification
         function displayNotification() {
             var successMessage = getParameterByName('success');
+            var errorMessage = "<?php echo isset($_SESSION['error']) ? $_SESSION['error'] : ''; ?>";
+
             if (successMessage === 'true') {
-                alert('Data inserted successfully!');
+                document.getElementById("message").innerHTML = 'Data inserted successfully!';
+            } else if (errorMessage !== '') {
+                document.getElementById("message").innerHTML = errorMessage;
             }
+        }
+
+        // Function to validate file selection before form submission
+        function validateFileSelection() {
+            var fileInput = document.getElementById("branchFile");
+            if (fileInput.files.length === 0) {
+                document.getElementById("message").innerHTML = 'Please select a file before uploading.';
+                return false;
+            }
+            return true;
         }
 
         // Call the displayNotification function when the page loads
@@ -35,7 +49,7 @@
     <h1>Upload Branch CSV File</h1>
 
     <!-- Form for CSV File Upload -->
-    <form id="uploadForm" action="./upload_branch.php" method="post" enctype="multipart/form-data">
+    <form id="uploadForm" action="./upload_branch.php" method="post" enctype="multipart/form-data" onsubmit="return validateFileSelection()">
         <!-- File input for CSV -->
         <label for="branchFile">Choose CSV File:</label>
         <input type="file" name="branchFile" id="branchFile" accept=".csv">
@@ -44,6 +58,7 @@
         <button type="submit">Upload CSV</button>
     </form>
     <br>
+    <div id="message"></div>
     <br>
 
     <!-- Form for Manual Entry -->
