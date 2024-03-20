@@ -25,6 +25,11 @@
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+        
+        .loading-symbol {
+            display: none;
+            /* Initially hide the loading symbol */
+        }
     </style>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
@@ -32,7 +37,7 @@
 <body>
     <img src="./images/nav.jpeg" width="100%" height="25%">
 
-    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd" ;>
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
         <a class="navbar-brand" href="#">KSRMCE EXAMINATION PORTAL</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -68,45 +73,30 @@
                         <div class="error-message" style="color: red;"></div>
 
                         <button type="button" class="btn btn-light text-white" onclick="submitForm()">Login</button>
+                        <div class="loading-symbol">
+                            <!-- Loading symbol placeholder -->
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-    <!-- 
     <script>
         function submitForm() {
+            // Show loading symbol
+            $('.loading-symbol').show();
+
             $.ajax({
                 type: "POST",
                 url: "./admin_login.php",
                 data: $("#loginForm").serialize(),
                 success: function(response) {
-                    if (response === "success1") {
-                        window.location.href = "./stdLogin.html"; // Redirect on successful login
-                    } else if (response === "success2") {
-                        window.location.href = "./facultylogin.html"; // Redirect on successful login
-                    } else if (response === "success3") {
-                        window.location.href = "./adminLogin.html";
-                    } else {
-                        $(".error-message").text(response); // Display error message
-                    }
-                }
-            });
-        }
-    </script> -->
-    <script>
-        function submitForm() {
-            $.ajax({
-                type: "POST",
-                url: "./admin_login.php",
-                data: $("#loginForm").serialize(),
-                success: function(response) {
+                    // Hide loading symbol
+                    $('.loading-symbol').hide();
+
                     if (response.startsWith("success")) {
                         var responseData = response.split("success");
-                        // responseData = responseData[2];
-                        // console.log(responseData[0]);
-                        // var userRole = responseData[1];
-                        // var userName = responseData[2];
 
                         // Extracting string from the array
                         var string = responseData[1];
