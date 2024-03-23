@@ -118,7 +118,7 @@ if ($conn->query($sql) === TRUE) {
     echo "Error creating table 'ADMINS': " . $conn->error;
 }
 
-$sql = "INSERT INTO BRANCH_ID_DETAILS (BRANCH_ID, BRANCH_NAME) VALUES (0, 'Admin')";
+$sql = "INSERT INTO BRANCH_ID_DETAILS (BRANCH_ID, BRANCH_NAME) VALUES (1, 'CIVIL')";
 
 if($conn->query($sql)===TRUE){
     echo "Table 'BATCHID' Data inserted successfully<br>";
@@ -126,37 +126,43 @@ if($conn->query($sql)===TRUE){
     echo  "Error inserting data into 'ADMINS' table: " . $conn->error;
 }
 
-$sql = "INSERT INTO USER_DETAILS (USER_ID,USER_NAME,USER_GENDER,USER_DOB,USER_PH,BRANCH_ID,USER_BATCH,USER_NUM) VALUES ('ADMIN','ADMIN','M','00000000','',0,2020,3)";
+$sql = "INSERT INTO USER_DETAILS (USER_ID, USER_NAME, USER_GENDER, USER_DOB, USER_PH, BRANCH_ID, USER_BATCH, USER_NUM) 
+        VALUES ('ce', 'ce', 'M', '00000000', '', 1, 2020, 3),
+               ('ace1', 'ace1', 'M', '00000000', '', 1, 2020, 3),
+               ('ace2', 'ace2', 'M', '00000000', '', 1, 2020, 3),
+               ('ace3', 'ace3', 'M', '00000000', '', 1, 2020, 3),
+               ('staff', 'staff', 'M', '00000000', '', 1, 2020, 2)";
+
 
 if($conn->query($sql)===TRUE){
-    echo "Table 'ADMINS' Data inserted successfully<br>";
+    echo "Table 'ADMINS and STAFF' Data inserted successfully<br>";
 }else{
     echo  "Error inserting data into 'ADMINS' table: " . $conn->error;
 }
 
-$sql = "INSERT INTO USERID (USER_ID, PASSWORD) VALUES ('ADMIN', '00000000')";
+$sql = "INSERT INTO USERID (USER_ID, PASSWORD) VALUES ('ce', 'ksrm@1234'),('ace1', 'ksrm@1234'),('ace2', 'ksrm@1234'),('ace3', 'ksrm@1234'),('staff', 'ksrm@1234')";
 
 if($conn->query($sql)===TRUE){
-    echo "Table 'ADMINS' ID inserted successfully<br>";
+    echo "Table 'ADMINS and STAFF' ID inserted successfully<br>";
 }else{
     echo  "Error inserting data into 'ADMINS' table: " . $conn->error;
 }
 
-$sql = "INSERT INTO USER_DETAILS (USER_ID,USER_NAME,USER_GENDER,USER_DOB,USER_PH,BRANCH_ID,USER_BATCH,USER_NUM) VALUES ('FACULTY','FACULTY','M','00000000','',0,2020,2)";
+// $sql = "INSERT INTO USER_DETAILS (USER_ID,USER_NAME,USER_GENDER,USER_DOB,USER_PH,BRANCH_ID,USER_BATCH,USER_NUM) VALUES ('FACULTY','FACULTY','M','00000000','',0,2020,2)";
 
-if($conn->query($sql)===TRUE){
-    echo "Table 'FACULTY' Data inserted successfully<br>";
-}else{
-    echo  "Error inserting data into 'ADMINS' table: " . $conn->error;
-}
+// if($conn->query($sql)===TRUE){
+//     echo "Table 'FACULTY' Data inserted successfully<br>";
+// }else{
+//     echo  "Error inserting data into 'ADMINS' table: " . $conn->error;
+// }
 
-$sql = "INSERT INTO USERID (USER_ID, PASSWORD) VALUES ('FACULTY', '00000000')";
+// $sql = "INSERT INTO USERID (USER_ID, PASSWORD) VALUES ('FACULTY', '00000000')";
 
-if($conn->query($sql)===TRUE){
-    echo "Table 'FACULTY' ID inserted successfully<br>";
-}else{
-    echo  "Error inserting data into 'ADMINS' table: " . $conn->error;
-}
+// if($conn->query($sql)===TRUE){
+//     echo "Table 'FACULTY' ID inserted successfully<br>";
+// }else{
+//     echo  "Error inserting data into 'ADMINS' table: " . $conn->error;
+// }
 
 // Close connection
 $conn->close();
