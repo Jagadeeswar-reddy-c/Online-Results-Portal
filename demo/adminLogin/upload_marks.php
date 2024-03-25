@@ -51,6 +51,9 @@ foreach ($internal_data as $key => $internal_row) {
                         $internal_marks = 'MP';
                     }
                 }
+                if($internal_marks > 40) {
+                    $internal_marks = 40;
+                }
                 
             } else {
                 // Set internal marks as "NG" (Not Given) if absent
@@ -110,7 +113,12 @@ foreach ($external_data as $key => $external_row) {
                         $external_marks = 'AB';
                     }elseif($external_marks==-2){
                         $external_marks = 'MP';
+                    }elseif($external_marks==-7){
+                        $external_marks = '-';
                     }
+                }
+                if($external_marks > 70) {
+                    $external_marks = 70;
                 }
             } else {
                 // Set external marks as "NG" (Not Given) if absent
