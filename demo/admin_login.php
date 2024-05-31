@@ -51,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             // Sender and recipient
             $mail->setFrom('########@gmail.com'); // YOUR EMAIL ADDRESS
-            $to = $user_id . '@ksrmce.ac.in'; // User's email address
+            $to = $user_id . '@gmail.com'; // User's email address
             $mail->addAddress($to);
 
             // Email content
