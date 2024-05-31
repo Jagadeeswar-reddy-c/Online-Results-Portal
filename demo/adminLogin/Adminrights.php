@@ -5,16 +5,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST["password"];
 
     // Perform database connection and insertion (use appropriate credentials)
-    $servername = "localhost";
-    $db_username = "root";
-    $db_password = "";
-    $database = "STUDENT_MARKS_MANAGEMENT";
-
-    $conn = new mysqli($servername, $db_username, $db_password, $database);
-
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+    include '../configuration.php';
 
     // Escape user input for security
     $username = mysqli_real_escape_string($conn, $username);

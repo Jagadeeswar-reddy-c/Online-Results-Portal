@@ -13,19 +13,7 @@ if (!isset($_SESSION["user_id"])) {
 // Assuming you have already started the session and have $student_id in the session variable
 $student_id = $_SESSION["user_id"];
 
-// Database connection parameters
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "STUDENT_MARKS_MANAGEMENT";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $database);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+include '../configuration.php';
 
 // Handle form submission for editing
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

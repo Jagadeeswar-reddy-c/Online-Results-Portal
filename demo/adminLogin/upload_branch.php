@@ -12,19 +12,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $fileExtension = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
         $allowedExtensions = ['csv'];
 
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $dbname = "STUDENT_MARKS_MANAGEMENT";
+        include '../configuration.php';
 
         if (in_array($fileExtension, $allowedExtensions)) {
             $csvData = array_map('str_getcsv', file($fileTmpPath));
 
-            $conn = new mysqli($servername, $username, $password, $dbname);
-
-            if ($conn->connect_error) {
-                die("Connection failed: " . $conn->connect_error);
-            }
+            
 
             $sql = "INSERT IGNORE INTO BRANCH_ID_DETAILS (BRANCH_ID, BRANCH_NAME) VALUES (?, ?)";
             $stmt = $conn->prepare($sql);

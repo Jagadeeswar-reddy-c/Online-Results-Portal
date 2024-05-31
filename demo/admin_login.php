@@ -3,17 +3,7 @@
 session_start();
 
 // Establish connection to MySQL database
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "STUDENT_MARKS_MANAGEMENT";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+include 'configuration.php';
 
 // Include PHPMailer classes
 use PHPMailer\PHPMailer\PHPMailer;

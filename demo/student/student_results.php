@@ -36,19 +36,8 @@
 
     // Include the PHP code here
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["displayMarks"])) {
-        // Database connection parameters
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $dbname = "STUDENT_MARKS_MANAGEMENT";
-
-        // Create connection
-        $connection = new mysqli($servername, $username, $password, $dbname);
-
-        // Check connection
-        if ($connection->connect_error) {
-            die("Connection failed: " . $connection->connect_error);
-        }
+        
+        include '../configuration.php';
 
         // Get input values from the form
         $student_id = $_SESSION["user_id"]; // Retrieve user ID from session

@@ -11,16 +11,7 @@ if (isset($_FILES['studentFile']) && $_FILES['studentFile']['error'] === UPLOAD_
     if (in_array($fileExtension, $allowedExtensions)) {
         $csvData = array_map('str_getcsv', file($fileTmpPath));
 
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $dbname = "STUDENT_MARKS_MANAGEMENT";
-
-        $conn = new mysqli($servername, $username, $password, $dbname);
-
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
+        include '../configuration.php';
 
         $sql = "INSERT INTO USER_DETAILS (USER_ID, USER_NAME, USER_GENDER, USER_DOB, USER_PH, BRANCH_ID, USER_BATCH, USER_NUM) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);

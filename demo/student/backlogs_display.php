@@ -2,19 +2,7 @@
 
 session_start();
 
-// Database connection parameters
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "STUDENT_MARKS_MANAGEMENT";
-
-// Establishing a connection to the database
-$conn = new mysqli($servername, $username, $password, $database);
-
-// Check the connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+include '../configuration.php';
 
 // Function to retrieve failed subjects for a given user ID
 function getFailedSubjects($conn, $userID) {

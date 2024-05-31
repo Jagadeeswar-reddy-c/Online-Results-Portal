@@ -1,15 +1,6 @@
 <?php
 // Database connection
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "STUDENT_MARKS_MANAGEMENT";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+include '../configuration.php';
 
 $semester_id = $_POST['semester_id'];
 

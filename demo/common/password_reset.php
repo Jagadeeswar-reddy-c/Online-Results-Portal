@@ -5,18 +5,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $student_id = $_POST['student_id'];
 
     // Change these credentials to match your MySQL server
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "STUDENT_MARKS_MANAGEMENT";
-
-    // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
-
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+    include '../configuration.php';
 
     // Query to reset password based on USER_DOB
     $sql = "SELECT USER_ID FROM USER_DETAILS WHERE USER_ID = '$student_id'";

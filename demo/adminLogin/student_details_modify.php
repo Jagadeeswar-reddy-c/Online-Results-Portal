@@ -21,7 +21,7 @@
         // Check if the form is submitted
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Include your database connection file
-            include 'db_connection.php';
+            include '../configuration.php';
 
             // Get the input value
             $studentId = $_POST["student_id"];
