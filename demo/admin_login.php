@@ -45,33 +45,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $userNameResult = $conn->query("SELECT USER_NAME FROM USER_DETAILS WHERE USER_ID='$username'");
             $row = $userNameResult->fetch_assoc();
             $userName = $row['USER_NAME'];
+
+            if ($userNum == 1) {
         
-            // Create a new PHPMailer instance
-            $mail = new PHPMailer(true);
+                // Create a new PHPMailer instance
+                $mail = new PHPMailer(true);
 
-            // SMTP settings
-            $mail->isSMTP();
-            $mail->Host = 'smtp.gmail.com';
-            $mail->SMTPAuth = true;
-            $mail->Username = '209y1a0542@ksrmce.ac.in'; // Your email address
-            $mail->Password = 'kedkcuaphmdozzrq'; // Your email password
-            $mail->SMTPSecure = 'ssl';
-            $mail->Port = 465;
+                // SMTP settings
+                $mail->isSMTP();
+                $mail->Host = 'smtp.gmail.com';
+                $mail->SMTPAuth = true;
+                $mail->Username = '209y1a0542@ksrmce.ac.in'; // Your email address
+                $mail->Password = 'towcmfxkhiiabhdr'; // Your email password
+                $mail->SMTPSecure = 'ssl';
+                $mail->Port = 465;
 
-            // Sender and recipient
-            $mail->setFrom('209y1a0542@ksrmce.ac.in');
-            $to = $user_id . '@ksrmce.ac.in'; // User's email address
-            $mail->addAddress($to);
+                // Sender and recipient
+                $mail->setFrom('209y1a0542@ksrmce.ac.in');
+                $to = $user_id . '@ksrmce.ac.in'; // User's email address
+                $mail->addAddress($to);
 
-            // Email content
-            $mail->isHTML(true);
-            $mail->Subject = "Login Notification";
-            $mail->Body = "Hello $userName, you have successfully logged in.";
-
+                // Email content
+                $mail->isHTML(true);
+                $mail->Subject = "Login Notification";
+                $mail->Body = "Hello $userName, you have successfully logged in.";
+            }
+            
             // Send email
-            if ($mail->send()) {
-                // Return success response with user role and name
+            if ($userNum == 2 || $userNum == 3) {
                 echo "success$userNum $userName"; 
+            } else if ($userNum == 1) {
+                if($mail->send()){
+                    echo "success$userNum $userName";
+                }
+                // Return success response with user role and name
+                 
             } else {
                 // Login failed
                 echo "Mail sending failed";

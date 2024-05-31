@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+	
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Page</title>
+    <!-- Linking Google font link for icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+ <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles5.css') }}">
+ <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet" />
+	  <style>
+	 body{
+	 background-color:#e7f2fd;
+      
+    }
+ 
+    #content {
+     
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	  margin-left:200px;
+    }
+    h3 {
+      text-align: center;
+margin-top:50px;	  /* Center align heading */
+    }
+    h4 {
+            text-align: center;
+    }
+    #plot {
+      margin-bottom: 20px;
+    }
+    .statistics-box {
+      background-color: #f0f0f0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 10px;
+      margin-bottom: 10px;
+      text-align: center; /* Center align content */
+    }
+    .statistics-box p {
+      margin: 5px 0;
+      font-size: 16px; /* Increase font size */
+      font-weight: bold; /* Bold text */
+    }
+
+	  </style>
+	  
+  </head>
+  <body>
+ <!--side bar Start-->
+
+   
+		<!--navbar end--> 
+		<!--content part start -->
+     {% if marks %}
+  <!-- Content -->
+  <div id="content">
+    <!-- Subject Statistics -->
+    <h3>Subject Statistics</h3><br>
+    <h4>{{marks[0][2]}} - {{marks[0][3]}}</h4> <!-- Display subject details -->
+    <!-- Display the Plotly bar chart -->
+    <div id="plot"></div>
+
+    <!-- JavaScript code to render Plotly chart -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script>
+      // Parse JSON data for the Plotly chart
+      var graphJson = {{ graph_json | safe }};
+
+      // Render the Plotly chart
+      Plotly.newPlot('plot', graphJson.data, graphJson.layout);
+    </script>
+    <!-- Display pass and failure percentages in the graph -->
+    <script>
+      // Define the pass count and fail count
+      var passCount = {{ pass_count }};
+      var failCount = {{ fail_count }};
+
+      // Define the text annotations for pass and fail counts
+      var annotations = [
+        {
+          x: 'Pass',
+          y: {{ pass_percentage }},
+          text: passCount + ' students passed',
+          showarrow: false,
+          xanchor: 'center',
+          yanchor: 'bottom'
+        },
+        {
+          x: 'Fail',
+          y: {{ fail_percentage }},
+          text: failCount + ' students failed',
+          showarrow: false,
+          xanchor: 'center',
+          yanchor: 'bottom'
+        }
+      ];
+
+      // Update the layout to include text annotations
+      Plotly.relayout('plot', {annotations: annotations});
+    </script>
+    {% if pass_percentage is defined and fail_percentage is defined %}
+      <div class="statistics-box">
+        <p>Pass Percentage: {{ pass_percentage }}%</p><br>
+        <p>Failure Percentage: {{ fail_percentage }}%</p><br>
+        <p>{{ pass_count }} students passed</p><br>
+        <p>{{ fail_count }} students failed</p><br>
+      </div>
+    {% endif %}
+  </div>
+{% else %}
+  <h4>No subject marks available.</h4>
+{% endif %}
+
+	   
+	  
+   
+	<!--content part end -->
+
+    <script>
+      const btn_menu = document.querySelector(".btn-menu");
+      const side_bar = document.querySelector(".sidebar");
+
+      btn_menu.addEventListener("click", function () {
+        side_bar.classList.toggle("expand");
+        changebtn();
+      });
+
+      function changebtn() {
+        if (side_bar.classList.contains("expand")) {
+          btn_menu.classList.replace("bx-menu", "bx-menu-alt-right");
+        } else {
+          btn_menu.classList.replace("bx-menu-alt-right", "bx-menu");
+        }
+      }
+
+      const btn_theme = document.querySelector(".theme-btn");
+      const theme_ball = document.querySelector(".theme-ball");
+
+      const localData = localStorage.getItem("theme");
+
+      if (localData == null) {
+        localStorage.setItem("theme", "light");
+      }
+
+      if (localData == "dark") {
+        document.body.classList.add("dark-mode");
+        theme_ball.classList.add("dark");
+      } else if (localData == "light") {
+        document.body.classList.remove("dark-mode");
+        theme_ball.classList.remove("dark");
+      }
+
+      btn_theme.addEventListener("click", function () {
+        document.body.classList.toggle("dark-mode");
+        theme_ball.classList.toggle("dark");
+        if (document.body.classList.contains("dark-mode")) {
+          localStorage.setItem("theme", "dark");
+        } else {
+          localStorage.setItem("theme", "light");
+        }
+      });
+    </script>
+	<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>
